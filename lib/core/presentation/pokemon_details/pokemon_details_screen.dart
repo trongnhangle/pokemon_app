@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon_challenge/core/data/models/pokemon.dart';
 import 'package:pokemon_challenge/core/presentation/pokemon_details/pokemon_details_viewmodel.dart';
@@ -33,13 +34,45 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
           if (viewModel.isLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (viewModel.errorMessage != null) {
-            return Center(child: Text(viewModel.errorMessage!));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error, size: 48),
+                  const SizedBox(height: 16),
+                  Text(
+                    viewModel.errorMessage!,
+                    textAlign: TextAlign.center,
+                  ),
+                  if (viewModel.errorMessage == 'No Internet connection' ||
+                      viewModel.errorMessage == 'Request timed out')
+                    ElevatedButton(
+                      onPressed: () =>
+                          viewModel.fetchPokemonDetails(widget.pokemon.id),
+                      child: const Text('Retry'),
+                    ),
+                ],
+              ),
+            );
           } else {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.network(viewModel.pokemonDetails!.imageUrl),
+                  CachedNetworkImage(
+                    imageUrl: viewModel.pokemonDetails!.imageUrl,
+                    fit: BoxFit.cover,
+                    width: 200,
+                    height: 200,
+                    placeholder: (context, url) => Container(
+                      width: 200,
+                      height: 200,
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
                   Text(
                     'Height: ${viewModel.pokemonDetails!.height / 10} m',
                     style: const TextStyle(fontSize: 18),
@@ -49,10 +82,9 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                     style: const TextStyle(fontSize: 18),
                   ),
                   const SizedBox(height: 16),
-                  Text(
+                  const Text(
                     'Types:',
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Wrap(
