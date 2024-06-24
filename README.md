@@ -2,7 +2,8 @@
 
 This repository showcases a Flutter application that fetches and displays a list of Pokémon from the PokéAPI. Navigate to a detailed view to learn more about each Pokémon's stats, abilities, and types.
 
-![0624 (1)](https://github.com/trongnhangle/pokemon_challenge/assets/108941086/c113a021-3b98-4e11-8207-dec12454946b)
+![0624 (1)](https://github.com/trongnhangle/pokemon_challenge/assets/108941086/10d6544b-a9ea-4cb0-add7-a16e1b817fd6)
+
 
 
 ###  Features ✨
