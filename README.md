@@ -12,8 +12,8 @@ This repository showcases a Flutter application that fetches and displays a list
 
 ### How to Run the App 🏃‍♂️
 
-1. **Clone the Repository:** `git clone https://github.com/your-username/pokemon-app.git`
-2. **Navigate to the Project Directory:**  `cd pokemon-app`
+1. **Clone the Repository:** `https://github.com/trongnhangle/pokemon_challenge.git`
+2. **Navigate to the Project Directory:**  `cd pokemon_challenge`
 3. **Install Dependencies:**  `flutter pub get`
 4. **Run the App:** `flutter run`
 
