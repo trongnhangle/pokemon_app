@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_challenge/core/data/models/pokemon.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pokemon_challenge/app_router.dart';
+import 'package:pokemon_challenge/features/pokemon_list/domain/entities/pokemon_entity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../pokemon_details/pokemon_details_screen.dart';
 
 class PokemonListItem extends StatelessWidget {
-  final Pokemon pokemon;
+  final PokemonEntity pokemon;
 
   const PokemonListItem({Key? key, required this.pokemon}) : super(key: key);
 
@@ -26,12 +27,8 @@ class PokemonListItem extends StatelessWidget {
       ),
       title: Text(pokemon.name),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PokemonDetailsScreen(pokemon: pokemon),
-          ),
-        );
+        context.go('${AppRouter.pokemonDetails}?id=${pokemon.id}',
+            extra: pokemon);
       },
     );
   }

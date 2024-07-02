@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_challenge/app_router.dart';
 import 'package:pokemon_challenge/core/injection_container.dart' as di;
-import 'package:pokemon_challenge/core/presentation/pokemon_list/pokemon_list_viewmodel.dart';
-import 'package:pokemon_challenge/core/presentation/pokemon_list/pokemon_list_screen.dart';
+import 'package:pokemon_challenge/features/pokemon_details/presentation/viewmodels/pokemon_details_viewmodel.dart';
+import 'package:pokemon_challenge/features/pokemon_list/presentation/viewmodels/pokemon_list_viewmodel.dart';
 import 'package:provider/provider.dart';
-
-import 'core/presentation/pokemon_details/pokemon_details_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,10 +23,10 @@ class MyApp extends StatelessWidget {
           create: (_) => di.sl<PokemonDetailsViewModel>(),
         ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Pokemon App',
-        home: PokemonListScreen(),
+        routerConfig: AppRouter.router,
       ),
     );
   }

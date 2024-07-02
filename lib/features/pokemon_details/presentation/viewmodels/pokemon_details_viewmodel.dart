@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_challenge/core/data/models/pokemon_details.dart';
-import 'package:pokemon_challenge/core/domain/usecases/get_pokemon_details.dart';
+import 'package:pokemon_challenge/features/pokemon_details/domain/usecases/get_pokemon_details.dart';
 
 class PokemonDetailsViewModel extends ChangeNotifier {
   final GetPokemonDetails getPokemonDetails;
@@ -22,12 +22,18 @@ class PokemonDetailsViewModel extends ChangeNotifier {
 
     final result = getPokemonDetails(pokemonId);
 
-    result().then((pokemonDetails) {
-      _pokemonDetails = pokemonDetails;
-      _isLoading = false;
-      notifyListeners();
+    result.then((either) {
+      either.fold(
+        (failure) {
+          _errorMessage = failure.message;
+        },
+        (pokemonDetails) {
+          _pokemonDetails = pokemonDetails;
+        },
+      );
     }).catchError((error) {
-      _errorMessage = error.toString();
+      _errorMessage = 'Unknown Error: ${error.toString()}';
+    }).whenComplete(() {
       _isLoading = false;
       notifyListeners();
     });
