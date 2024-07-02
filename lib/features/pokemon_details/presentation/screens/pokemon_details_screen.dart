@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pokemon_challenge/app_router.dart';
 import 'package:pokemon_challenge/features/pokemon_list/domain/entities/pokemon_entity.dart';
 import 'package:pokemon_challenge/features/pokemon_details/presentation/viewmodels/pokemon_details_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +36,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            context.go(AppRouter.pokemonList);
+            context.go('/');
           },
         ),
       ),
