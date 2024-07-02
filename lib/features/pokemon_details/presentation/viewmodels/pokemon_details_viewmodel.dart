@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_challenge/core/data/models/pokemon_details.dart';
+import 'package:pokemon_challenge/features/pokemon_details/domain/entities/pokemon_details_entity.dart';
 import 'package:pokemon_challenge/features/pokemon_details/domain/usecases/get_pokemon_details.dart';
 
 class PokemonDetailsViewModel extends ChangeNotifier {
@@ -7,8 +7,8 @@ class PokemonDetailsViewModel extends ChangeNotifier {
 
   PokemonDetailsViewModel({required this.getPokemonDetails});
 
-  PokemonDetails? _pokemonDetails;
-  PokemonDetails? get pokemonDetails => _pokemonDetails;
+  PokemonDetailsEntity? _pokemonDetails;
+  PokemonDetailsEntity? get pokemonDetails => _pokemonDetails;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -20,22 +20,18 @@ class PokemonDetailsViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    final result = getPokemonDetails(pokemonId);
+    final result = await getPokemonDetails(pokemonId);
 
-    result.then((either) {
-      either.fold(
-        (failure) {
-          _errorMessage = failure.message;
-        },
-        (pokemonDetails) {
-          _pokemonDetails = pokemonDetails;
-        },
-      );
-    }).catchError((error) {
-      _errorMessage = 'Unknown Error: ${error.toString()}';
-    }).whenComplete(() {
-      _isLoading = false;
-      notifyListeners();
-    });
+    result.fold(
+      (failure) {
+        _errorMessage = failure.message;
+      },
+      (pokemonDetails) {
+        _pokemonDetails = pokemonDetails;
+      },
+    );
+
+    _isLoading = false;
+    notifyListeners();
   }
 }

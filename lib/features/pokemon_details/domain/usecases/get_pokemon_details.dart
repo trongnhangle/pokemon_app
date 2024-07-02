@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:pokemon_challenge/core/error/failures.dart';
-import 'package:pokemon_challenge/core/data/models/pokemon_details.dart';
+import 'package:pokemon_challenge/features/pokemon_details/domain/entities/pokemon_details_entity.dart';
 import 'package:pokemon_challenge/features/pokemon_details/domain/repositories/pokemon_details_repository.dart';
 
 class GetPokemonDetails {
@@ -8,7 +8,7 @@ class GetPokemonDetails {
 
   GetPokemonDetails({required this.repository});
 
-  Future<Either<Failure, PokemonDetails>> call(int pokemonId) async {
+  Future<Either<Failure, PokemonDetailsEntity>> call(int pokemonId) async {
     return await repository.getPokemonDetails(pokemonId);
   }
 }
